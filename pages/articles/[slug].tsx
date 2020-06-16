@@ -18,15 +18,6 @@ const Post = ({ post }: MyProps) => {
         </h2>
       </header>
       <article className={styles.article}>
-        <span className={styles.metadata}>LAST UPDATED: </span>
-        <span className={styles.metadataValue}>
-          {new Date(post.modified_gmt).toLocaleDateString("en-us", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </span>
         {/**
         <span> </span>
         <span className={styles.metadata}>VIEW ON: </span>
@@ -36,8 +27,17 @@ const Post = ({ post }: MyProps) => {
           </a>
         </span>
          */}
-        <h1 className={styles.blogtitle}>{post?.title?.rendered}</h1>
-        <div
+        <h1 className={styles.blogtitle} dangerouslySetInnerHTML={{ __html: scrub(post?.title?.rendered) }} />
+        <span className={styles.metadata}>LAST UPDATED: </span>
+        <span className={styles.metadataValue}>
+          {new Date(post.modified_gmt).toLocaleDateString("en-us", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </span>
+        <div className={styles.content}
           dangerouslySetInnerHTML={{ __html: scrub(post?.content?.rendered) }}
         ></div>
       </article>
