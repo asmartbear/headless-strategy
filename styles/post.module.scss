@@ -4,8 +4,9 @@
     max-width: 877px;
   }
   .sitetitle {
-    font-size: 4em;
+    font-size: 1.5em;
     max-width: 877px;
+    margin-top: 0;
   }
 
   .description {
@@ -56,7 +57,7 @@
 
   @media screen and (max-width: 900px) {
     .sitetitle {
-      font-size: 1.5em;
+      font-size: 1em;
     }
     .article {
       padding: 1em;

@@ -36,12 +36,12 @@
 .main {
   max-width: 1187px;
   margin: 0 auto;
-  padding: 2em;
+  padding: 1em 2em;
 }
 
 @media screen and (max-width: 900px) {
   .main {
     max-width: 100%;
-    padding: 1em;
+    padding: 0.5em 1em;
   }
 }

@@ -7,7 +7,7 @@ interface MyProps {
 }
 
 export const Card = ({post}:MyProps) => (
-  <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+  <Link href="/articles/[slug]" as={`/articles/${post.slug}`}>
     <div className={styles.card}>
       <h3
         className={styles.title}

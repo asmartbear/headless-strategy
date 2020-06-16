@@ -2,26 +2,32 @@ import { Layout } from "../../components";
 import styles from "../../styles/post.module.scss";
 import { GetServerSideProps } from "next";
 import { scrub } from "../../utils";
-import { ServerRepo } from "../../server/repo";
+import { WPPost, getPostBySlug } from "../../server/rest";
+import { ParsedUrlQuery } from "querystring";
 
-const Post = ({ post }) => {
+interface MyProps {
+  post: WPPost,
+}
+
+const Post = ({ post }: MyProps) => {
   return (
     <Layout className={styles.post}>
       <header>
         <h2 className={styles.sitetitle}>
-          Headless WordPress and Content Management Systems
+          WP Engine Product Strategy
         </h2>
       </header>
       <article className={styles.article}>
-        <span className={styles.metadata}>PUBLISHED: </span>
+        <span className={styles.metadata}>LAST UPDATED: </span>
         <span className={styles.metadataValue}>
-          {new Date(post.date).toLocaleDateString("en-us", {
+          {new Date(post.modified_gmt).toLocaleDateString("en-us", {
             weekday: "long",
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
         </span>
+        {/**
         <span> </span>
         <span className={styles.metadata}>VIEW ON: </span>
         <span className={styles.metadataValue}>
@@ -29,6 +35,7 @@ const Post = ({ post }) => {
             {post?.site}
           </a>
         </span>
+         */}
         <h1 className={styles.blogtitle}>{post?.title?.rendered}</h1>
         <div
           dangerouslySetInnerHTML={{ __html: scrub(post?.content?.rendered) }}
@@ -38,8 +45,8 @@ const Post = ({ post }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const post = await ServerRepo.Post((ctx as any).params["id"]);
+export const getServerSideProps: GetServerSideProps<MyProps,ParsedUrlQuery> = async (ctx) => {
+  const post = await getPostBySlug((ctx as any).params["slug"]);
   return { props: { post } };
 };
 

@@ -1,7 +1,13 @@
 .navbar {
   display: flex;
-  padding: 2em;
+  padding: 1em 2em;
   flex-direction: column;
   background: transparent linear-gradient(180deg, #121b24a3 0%, #121b2400 100%)
     0% 0% no-repeat padding-box;
+}
+
+@media screen and (max-width: 900px) {
+  .navbar {
+    padding: 0.5em 1em;
+  }
 }

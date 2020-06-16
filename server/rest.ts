@@ -73,6 +73,16 @@ export interface WPPost {
 const WP_URL = process.env.WP_URL;
 
 /**
+ * Loads a post from WordPress, given its unique ID, or throws exception if it cannot be found or if there's an error communicating with WordPress.
+ */
+export async function getPostById( id:number ): Promise<WPPost> {
+    const url = `${WP_URL}/wp-json/wp/v2/posts/${id}`;
+    const response = await fetch(url);
+    if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
+    return await response.json();
+}
+
+/**
  * Loads a post from WordPress, given its unique slug, or throws exception if it cannot be found or if there's an error communicating with WordPress.
  */
 export async function getPostBySlug( slug:string ): Promise<WPPost> {
