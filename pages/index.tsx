@@ -1,22 +1,28 @@
 import { Layout, Card } from "../components";
 import styles from "../styles/index.module.scss";
 import { NextComponentType, NextPageContext, GetStaticProps } from "next";
-import { ServerRepo } from "../server/repo";
+import { getPostBySlug, WPPost } from "../server/rest";
+import { ParsedUrlQuery } from "querystring";
 
-const Home = ({ posts }) => {
-  const Cards: NextComponentType<
-    NextPageContext,
-    {},
-    { posts?: Array<any> }
-  > = ({ posts }) => {
-    return (
-      <div className={styles.cards}>
-        {posts.map((post) => (
-          <Card key={post.uid} post={post}></Card>
-        ))}
-      </div>
-    );
-  };
+interface MyProps {
+  post: WPPost,
+}
+
+const Home = (p:MyProps) => {
+
+  // const Cards: NextComponentType<
+  //   NextPageContext,
+  //   {},
+  //   { posts?: Array<any> }
+  // > = ({ posts }) => {
+  //   return (
+  //     <div className={styles.cards}>
+  //       {posts.map((post) => (
+  //         <Card key={post.uid} post={post}></Card>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   return (
     <Layout className={styles.home}>
@@ -36,16 +42,19 @@ const Home = ({ posts }) => {
             on WP Engine.
           </p>
         </header>
-        */}
         <Cards posts={posts} />
+        */}
+        <div className={styles.cards}>
+          <Card key={p.post.id} post={p.post} />
+        </div>
       </main>
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const posts = await ServerRepo.Posts();
-  return { props: { posts }, unstable_revalidate: 15 };
+export const getStaticProps: GetStaticProps<MyProps,ParsedUrlQuery> = async (ctx) => {
+  const home = await getPostBySlug("home");    // special content for the home page
+  return { props: { post: home }, unstable_revalidate: 15 };
 };
 
 export default Home;
