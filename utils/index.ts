@@ -2,16 +2,20 @@
 /**
  * Replaces full URLs created by WordPress with API URLs we need in our Headless site.
  */
-export const scrub = (text: string) => {
+export function scrub(text: string): string {
   if (!text) return "";
-  let newText: string;
-  newText = text.replace(/src="https:\/\//g, `src="/api/proxy/`);
-  newText = newText.replace(/src="http:\/\//g, `src="/api/proxy/`);
-  newText = newText.replace(
+
+  // Transform links to stay with our Headless system
+  text = text.replace(/\bhref="https:\/\/strategyprod.wpengine.com\//g, `href="/articles/`);
+
+  // Transform images to use our proxy
+  text = text.replace(/src="https:\/\//g, `src="/api/proxy/`);
+  text = text.replace(/src="http:\/\//g, `src="/api/proxy/`);
+  text = text.replace(
     /(?=(width|height|style|srcset)\=")(.*?)(?=" )./g,
     ""
   );
-  return newText;
+  return text;
 };
 
 /**

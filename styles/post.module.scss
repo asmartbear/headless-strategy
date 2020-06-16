@@ -1,11 +1,13 @@
+$maxwidth: 877;
+
 .post {
   color: white;
   header {
-    max-width: 877px;
+    max-width: $maxwidth;
   }
   .sitetitle {
     font-size: 1.5em;
-    max-width: 877px;
+    max-width: $maxwidth;
     margin-top: 0;
   }
 
@@ -16,10 +18,11 @@
   }
   .article {
     padding: 2em;
-    background-color: #180038c0;
+    background-color: #180038f0;
     text-align: left;
     font-size: 1.25rem;
     font-weight: 200;
+    line-height: 1.4;
     .metadata {
       font-size: 14px;
       font-weight: bold;
