@@ -1,8 +1,10 @@
 import fetch from "node-fetch";
 import { clone } from "../../utils";
 
-const BLOGS = process.env.BLOGS.split(",");
-const CATEGORIES = process.env.CATEGORIES.split(",");
+/**
+ * The base URL to the WordPress site with the content.
+ */
+const WP_URL = process.env.WP_URL;
 
 interface PostCache {
   urls?: Array<string>;
@@ -66,23 +68,22 @@ export const Posts = async (): Promise<Array<any>> => {
 const postURLs = async (): Promise<Array<string>> => {
   const urls = [];
 
-  for (const blog of BLOGS) {
-    const result = await fetch(`${blog}/wp-json/wp/v2/categories`);
-    if (result.ok) {
-      const wpcats: Array<any> = await result.json();
-      const catids = [];
-      for (const wpcat of wpcats) {
-        if (CATEGORIES.includes(wpcat.slug)) {
-          catids.push(wpcat.id);
-        }
-      }
-      urls.push(
-        `${blog}/wp-json/wp/v2/posts?categories=${catids.join(
-          ","
-        )}&_fields=id,site,title,excerpt,slug,content`
-      );
-    }
-  }
+  // for (const blog of BLOGS) {
+  //   const result = await fetch(`${blog}/wp-json/wp/v2/categories`);
+  //   if (result.ok) {
+  //     const wpcats: Array<any> = await result.json();
+  //     const catids = [];
+  //     for (const wpcat of wpcats) {
+  //       if (CATEGORIES.includes(wpcat.slug)) {
+  //         catids.push(wpcat.id);
+  //       }
+  //     }
+  //     urls.push(
+  //       `${blog}/wp-json/wp/v2/posts?categories=${catids.join(",")}&_fields=id,site,title,excerpt,slug,content`
+  //     );
+  //   }
+  // }
+  urls.push(`${WP_URL}/wp-json/wp/v2/posts`)
   _cache.urls = urls;
   return urls;
 };

@@ -1,10 +1,7 @@
 module.exports = () => {
   return {
     env: {
-      CATEGORIES:
-        process.env.CATEGORIES ||
-        "headless,development,atomic-block,atomic-blocks",
-      BLOGS: process.env.BLOGS || "https://torquemag.io,https://wpengine.com",
+      WP_URL: process.env.WP_URL || "https://strategyprod.wpengine.com",
     },
   };
 };

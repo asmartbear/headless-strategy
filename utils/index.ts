@@ -1,3 +1,7 @@
+
+/**
+ * Replaces full URLs created by WordPress with API URLs we need in our Headless site.
+ */
 export const scrub = (text: string) => {
   if (!text) return "";
   let newText: string;
@@ -10,4 +14,9 @@ export const scrub = (text: string) => {
   return newText;
 };
 
-export const clone = (o: any) => JSON.parse(JSON.stringify(o));
+/**
+ * Deep-copy an object, but only types that are compatible with JSON.
+ */
+export function clone<T>(o: T): T {
+  return JSON.parse(JSON.stringify(o))
+}

@@ -21,15 +21,13 @@ const Home = ({ posts }) => {
   return (
     <Layout className={styles.home}>
       <header>
-        <h1>Headless WordPress and Content Management Systems</h1>
+        <h1>WP Engine Product Strategy</h1>
         <p className={styles.description}>
-          The world’s best platform for digital experiences now offers full
-          hosting of headless architecture! Power up your WordPress driven
-          content with JavaScript frameworks like React, Angular, or Vue all in
-          one place.
+          A hyperlinked Wunderkammer.
         </p>
       </header>
       <main className={styles.main}>
+        {/*
         <header className="m0a">
           <h2>Decoupled Digital Experiences.</h2>
           <p className={styles.description}>
@@ -38,6 +36,7 @@ const Home = ({ posts }) => {
             on WP Engine.
           </p>
         </header>
+        */}
         <Cards posts={posts} />
       </main>
     </Layout>

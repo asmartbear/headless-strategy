@@ -1,7 +1,7 @@
 {
-  "name": "headless-summit2020",
-  "version": "1.0.0",
-  "description": "",
+  "name": "headless-strategy",
+  "version": "1.0.1",
+  "description": "Choose your own adventure! But all roads lead to the same place.",
   "main": "index.js",
   "scripts": {
     "dev": "next",
@@ -10,8 +10,11 @@
     "start": "next start -p 8080"
   },
   "keywords": [],
-  "author": "",
+  "author": "jason.cohen@wpengine.com",
   "license": "ISC",
+  "engines": {
+    "node": "12.18.0"
+  },
   "dependencies": {
     "@types/next": "^9.0.0",
     "@types/node-fetch": "^2.5.7",
