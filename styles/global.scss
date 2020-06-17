@@ -20,6 +20,37 @@ body,
   align-self: flex-end;
 }
 
+/*******************************/
+/****** WordPress Blocks *******/
+/*******************************/
+
+img {
+  margin: 0;
+  padding: 0;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+  border: 2px inset adjust-color( $articleBackgroundColor, $lightness: 0% );
+}
+
+figure.alignright {
+  float: right;
+  width: 40%;
+  margin-left: 1em;
+}
+
+figure.alignleft {
+  float: left;
+  width: 40%;
+  margin-right: 1em;
+}
+
+/*******************************/
+/****** Our styles *******/
+/*******************************/
+
 .external-link {
   color: #d0d0d0;
   width: 0.85em;
