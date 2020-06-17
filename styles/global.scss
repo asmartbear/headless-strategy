@@ -1,4 +1,6 @@
 
+$articleBackgroundColor: #180038f0;
+
 body,
 #__next {
   margin: 0;
@@ -23,4 +25,85 @@ body,
   width: 0.85em;
   padding: 0 0.1ex 0 0.5ex;
   margin: 0;
+}
+
+.article {
+  padding: 2em;
+  background-color: $articleBackgroundColor;
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 200;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  .metadata {
+    font-size: 14px;
+    font-weight: bold;
+    color: #6a92b8;
+    white-space: nowrap;
+    a {
+      color: #6a92b8;
+    }
+  }
+  .metadataValue {
+    white-space: nowrap;
+    font-size: 14px;
+    color: #6a92b8;
+    a {
+      color: #6a92b8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+  .blogtitle {
+    margin: 0;
+    font-size: 2.5rem;
+  }
+  .content {
+    margin-top: 1em;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  a {
+    color: white;
+  }
+  video,
+  img {
+    max-width: 100%;
+  }
+}
+.cards {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.sidebar {
+  display: inline-block;
+  float: right;
+  clear: right;
+  width: 30%;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  background: adjust-color( $articleBackgroundColor, $lightness: 25% );
+  padding: 1em 1em;
+  margin: 0 -4em 1ex 1.5em;
+  font-size: 75%;
+  border: 1px inset adjust-color( $articleBackgroundColor, $lightness: 60% );
+}
+
+@media screen and (max-width: 900px) {
+  .article {
+    padding: 0.75em;
+    font-size: 1rem;
+    hyphens: auto;
+    .blogtitle {
+      font-size: 2rem;
+    }
+    .sidebar {
+      width: 40%;
+      margin-right: -2em;
+    }
+  }
 }

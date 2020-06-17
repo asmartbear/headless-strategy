@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Layout, Card } from "../components";
+import { Layout } from "../components";
 import styles from "../styles/index.module.scss";
 import { NextComponentType, NextPageContext, GetStaticProps } from "next";
 import { getPostBySlug, WPPost } from "../server/rest";
@@ -10,20 +10,6 @@ interface MyProps {
 }
 
 const Home = (p:MyProps) => {
-
-  // const Cards: NextComponentType<
-  //   NextPageContext,
-  //   {},
-  //   { posts?: Array<any> }
-  // > = ({ posts }) => {
-  //   return (
-  //     <div className={styles.cards}>
-  //       {posts.map((post) => (
-  //         <Card key={post.uid} post={post}></Card>
-  //       ))}
-  //     </div>
-  //   );
-  // };
 
   return (
     <Layout className={styles.home}>
@@ -45,17 +31,20 @@ const Home = (p:MyProps) => {
         </header>
         <Cards posts={posts} />
         */}
-        <div className={styles.cards}>
-          <Card key={p.post.id} post={p.post} />
-        </div>
+        <article className="article">
+          {/* <h1 className="blogtitle" dangerouslySetInnerHTML={{ __html: p.post?.title?.rendered }} /> */}
+          <div className="content"
+            dangerouslySetInnerHTML={{ __html: p.post.content.rendered }}
+          ></div>
+        </article>
       </main>
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps<MyProps,ParsedUrlQuery> = async (ctx) => {
-  const home = await getPostBySlug("home");    // special content for the home page
-  return { props: { post: home }, unstable_revalidate: 15 };
+  const home = await getPostBySlug("home");    // content for the home page
+  return { props: { post: home } };
 };
 
 export default Home;

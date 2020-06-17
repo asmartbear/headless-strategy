@@ -7,12 +7,27 @@ import { ParsedUrlQuery } from "querystring";
 
 interface MyProps {
   post: WPPost,
-  content: string,
+
+  /**
+   * If true, displays all components on the page, otherwise just the bare-bones of the content.
+   */
+  full: boolean,
 }
 
-const Post = ({ post, content }: MyProps) => {
+const Post = ({ post, full }: MyProps) => {
 
-  const tagSpans = post.tags.map( tagId => <span className={styles.metadataValue}>&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a>&nbsp;&nbsp;</span> )
+  const tagSpans = full ? post.tags.map( tagId => <span className="metadataValue">&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a>&nbsp;&nbsp;</span> ) : [];
+  const tagLastUpdated = full ? <div>
+      <span className="metadata">LAST UPDATED: </span>
+      <span className="metadataValue">
+        {new Date(post.modified_gmt).toLocaleDateString("en-us", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </span><br/>{tagSpans}
+    </div> : [];
 
   return (
     <Layout className={styles.post}>
@@ -23,29 +38,11 @@ const Post = ({ post, content }: MyProps) => {
           </h2>
         </Link>
       </header>
-      <article className={styles.article}>
-        {/**
-        <span> </span>
-        <span className={styles.metadata}>VIEW ON: </span>
-        <span className={styles.metadataValue}>
-          <a href={post?.link} target="_blank">
-            {post?.site}
-          </a>
-        </span>
-         */}
-        <h1 className={styles.blogtitle} dangerouslySetInnerHTML={{ __html: post?.title?.rendered }} />
-        <span className={styles.metadata}>LAST UPDATED: </span>
-        <span className={styles.metadataValue}>
-          {new Date(post.modified_gmt).toLocaleDateString("en-us", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </span><br/>
-        {tagSpans}
-        <div className={styles.content}
-          dangerouslySetInnerHTML={{ __html: content }}
+      <article className="article">
+        <h1 className="blogtitle" dangerouslySetInnerHTML={{ __html: post?.title?.rendered }} />
+        {tagLastUpdated}
+        <div className="content"
+          dangerouslySetInnerHTML={{ __html: post?.content?.rendered }}
         ></div>
       </article>
     </Layout>
@@ -53,10 +50,10 @@ const Post = ({ post, content }: MyProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps<MyProps,ParsedUrlQuery> = async (ctx) => {
-  const post = await getPostBySlug((ctx as any).params["slug"]);
-  let content = post?.content?.rendered;
-  content = content.replace(/\bclass="sidebar"/g, `class="${styles.sidebar}"`);
-  return { props: { post, content } };
+  const slug = String(ctx.params["slug"]);
+  const post = await getPostBySlug(slug);
+  const full = slug !== "home";   // special case of the home page
+  return { props: { post, full } };
 };
 
 export default Post;
