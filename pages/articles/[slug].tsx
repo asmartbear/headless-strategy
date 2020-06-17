@@ -12,7 +12,7 @@ interface MyProps {
 
 const Post = ({ post, content }: MyProps) => {
 
-  const tagSpans = post.tags.map( tagId => <span className={styles.metadataValue}>&nbsp;&nbsp;&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a></span> )
+  const tagSpans = post.tags.map( tagId => <span className={styles.metadataValue}>&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a>&nbsp;&nbsp;</span> )
 
   return (
     <Layout className={styles.post}>
@@ -42,7 +42,7 @@ const Post = ({ post, content }: MyProps) => {
             month: "long",
             day: "numeric",
           })}
-        </span>
+        </span><br/>
         {tagSpans}
         <div className={styles.content}
           dangerouslySetInnerHTML={{ __html: content }}
