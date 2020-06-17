@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Layout, Card } from "../components";
 import styles from "../styles/index.module.scss";
 import { NextComponentType, NextPageContext, GetStaticProps } from "next";
@@ -29,7 +30,7 @@ const Home = (p:MyProps) => {
       <header>
         <h1>WP Engine Product Strategy</h1>
         <p className={styles.description}>
-          A hyperlinked Wunderkammer.
+          A Hyperlinked Wunderkammer.
         </p>
       </header>
       <main className={styles.main}>

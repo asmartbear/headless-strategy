@@ -1,3 +1,4 @@
+
 body,
 #__next {
   margin: 0;
@@ -15,4 +16,11 @@ body,
 
 .fe {
   align-self: flex-end;
+}
+
+.external-link {
+  color: #d0d0d0;
+  width: 0.85em;
+  padding: 0 0.1ex 0 0.5ex;
+  margin: 0;
 }

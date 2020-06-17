@@ -1,3 +1,5 @@
+$textColor: #98a2a7;
+
 .footer {
   display: flex;
   position: relative;
@@ -9,6 +11,9 @@
   .linkContainer {
     flex: 1;
   }
+  a {
+    color: $textColor;
+  }
 
   .legalContainer {
     width: 100%;
@@ -17,12 +22,12 @@
     flex-direction: row;
     .legal {
       flex: 1;
-      color: #98a2a7;
+      color: $textColor;
       font-size: 12px;
       text-align: right;
     }
     .copyright {
-      color: #98a2a7;
+      color: $textColor;
       font-size: 12px;
     }
   }

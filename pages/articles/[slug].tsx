@@ -1,21 +1,24 @@
+import Link from "next/link";
 import { Layout } from "../../components";
 import styles from "../../styles/post.module.scss";
 import { GetServerSideProps } from "next";
-import { scrub } from "../../utils";
 import { WPPost, getPostBySlug } from "../../server/rest";
 import { ParsedUrlQuery } from "querystring";
 
 interface MyProps {
   post: WPPost,
+  content: string,
 }
 
-const Post = ({ post }: MyProps) => {
+const Post = ({ post, content }: MyProps) => {
   return (
     <Layout className={styles.post}>
       <header>
-        <h2 className={styles.sitetitle}>
-          WP Engine Product Strategy
-        </h2>
+        <Link href="/">
+          <h2 className={styles.sitetitle}>
+            WP Engine Product Strategy
+          </h2>
+        </Link>
       </header>
       <article className={styles.article}>
         {/**
@@ -27,7 +30,7 @@ const Post = ({ post }: MyProps) => {
           </a>
         </span>
          */}
-        <h1 className={styles.blogtitle} dangerouslySetInnerHTML={{ __html: scrub(post?.title?.rendered) }} />
+        <h1 className={styles.blogtitle} dangerouslySetInnerHTML={{ __html: post?.title?.rendered }} />
         <span className={styles.metadata}>LAST UPDATED: </span>
         <span className={styles.metadataValue}>
           {new Date(post.modified_gmt).toLocaleDateString("en-us", {
@@ -38,7 +41,7 @@ const Post = ({ post }: MyProps) => {
           })}
         </span>
         <div className={styles.content}
-          dangerouslySetInnerHTML={{ __html: scrub(post?.content?.rendered) }}
+          dangerouslySetInnerHTML={{ __html: content }}
         ></div>
       </article>
     </Layout>
@@ -47,7 +50,9 @@ const Post = ({ post }: MyProps) => {
 
 export const getServerSideProps: GetServerSideProps<MyProps,ParsedUrlQuery> = async (ctx) => {
   const post = await getPostBySlug((ctx as any).params["slug"]);
-  return { props: { post } };
+  let content = post?.content?.rendered;
+  content = content.replace(/\bclass="sidebar"/g, `class="${styles.sidebar}"`);
+  return { props: { post, content } };
 };
 
 export default Post;

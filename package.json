@@ -16,6 +16,7 @@
     "node": "13.8.0"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.38",
     "@types/next": "^9.0.0",
     "@types/node-fetch": "^2.5.7",
     "@types/react": "^16.9.35",
