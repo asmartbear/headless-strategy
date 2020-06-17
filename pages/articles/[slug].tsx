@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Layout } from "../../components";
 import styles from "../../styles/post.module.scss";
 import { GetServerSideProps } from "next";
-import { WPPost, getPostBySlug } from "../../server/rest";
+import { WPPost, getPostBySlug, MAP_TAGID_TO_NAME } from "../../server/rest";
 import { ParsedUrlQuery } from "querystring";
 
 interface MyProps {
@@ -11,12 +11,15 @@ interface MyProps {
 }
 
 const Post = ({ post, content }: MyProps) => {
+
+  const tagSpans = post.tags.map( tagId => <span className={styles.metadataValue}>&nbsp;&nbsp;&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a></span> )
+
   return (
     <Layout className={styles.post}>
       <header>
         <Link href="/">
           <h2 className={styles.sitetitle}>
-            WP Engine Product Strategy
+            Product Strategy
           </h2>
         </Link>
       </header>
@@ -40,6 +43,7 @@ const Post = ({ post, content }: MyProps) => {
             day: "numeric",
           })}
         </span>
+        {tagSpans}
         <div className={styles.content}
           dangerouslySetInnerHTML={{ __html: content }}
         ></div>

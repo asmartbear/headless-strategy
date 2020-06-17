@@ -30,6 +30,9 @@ $articleBackgroundColor: #180038f0;
       font-weight: bold;
       color: #6a92b8;
       white-space: nowrap;
+      a {
+        color: #6a92b8;
+      }
     }
     .metadataValue {
       white-space: nowrap;
@@ -37,6 +40,10 @@ $articleBackgroundColor: #180038f0;
       color: #6a92b8;
       a {
         color: #6a92b8;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
       }
     }
     .blogtitle {

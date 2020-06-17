@@ -1,6 +1,14 @@
 import fetch from "node-fetch";
 
 /**
+ * Mapping of tag IDs to text.  We could pull that from WordPress of course.
+ */
+export const MAP_TAGID_TO_NAME: Record<number,string> = {
+    2: "Metrics",
+    3: "Growth",
+}
+
+/**
  * Typescript type of a WordPress Post object
  */
 export interface WPPost {
@@ -79,7 +87,9 @@ export async function getPostById( id:number ): Promise<WPPost> {
     const url = `${WP_URL}/wp-json/wp/v2/posts/${id}`;
     const response = await fetch(url);
     if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
-    return await transformPost(await response.json());
+    const post = transformPost(await response.json());
+    post.content.rendered = await transformFull(post.content.rendered);
+    return post;
 }
 
 /**
@@ -91,24 +101,36 @@ export async function getPostBySlug( slug:string, postType:string = "posts" ): P
     if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
     const posts: WPPost[] = await response.json();
     if ( posts.length === 0 ) throw new Error("couldn't find post with slug=" + slug)
-    return await transformPost(posts[0])
+    const post = transformPost(posts[0])
+    post.content.rendered = await transformFull(post.content.rendered);
+    return post;
+}
+
+/**
+ * Loads posts from WordPress, given unique tag IDs.
+ */
+export async function getPostsByTagId( id:number ): Promise<WPPost[]> {
+    const url = `${WP_URL}/wp-json/wp/v2/posts?tags=${id}`;
+    const response = await fetch(url);
+    if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
+    const posts: WPPost[] = await response.json();
+    return posts.map( post => transformPost(post) );
 }
 
 /**
  * Transforms raw fields from the REST API into fields that we want.
  */
-async function transformPost( post:WPPost ): Promise<WPPost> {
+function transformPost( post:WPPost ): WPPost {
     if ( post ) {
-        post.content.rendered = await transformForHeadless(post.content.rendered);
+        post.content.rendered = transformForHeadless(post.content.rendered);
     }
     return post;
 }
 
 /**
  * Converts WordPress HTML into Headless HTML, transforming links, images, and special sequences.
- * Can load additional data from WordPress along the way.
  */
-async function transformForHeadless(html: string): Promise<string> {
+function transformForHeadless(html: string): string {
     if (!html) return "";
     
     // Transform links to stay with our Headless system
@@ -123,6 +145,15 @@ async function transformForHeadless(html: string): Promise<string> {
     html = html.replace(/src="https?:\/\//g, `src="/api/proxy/`);
     html = html.replace(/(?=(width|height|style|srcset)\=")(.*?)(?=" )./g, "");
   
+    // Done!
+    return html;
+};
+
+/**
+ * Converts full content that also might require making further requests to WordPress.
+ */
+async function transformFull(html: string): Promise<string> {
+    
     // Transform sidebar indicators into actual sidebars.  First, load the set of referenced slugs.
     // Also save the locations of the beginning `<p>` tag for each slug.
     const sidebarSlugs: string[] = [];
@@ -152,12 +183,12 @@ async function transformForHeadless(html: string): Promise<string> {
     
     // Replace the in-line HTML with a reference to the sidebar article.
     html = html.replace(REGEXP_SIDEBAR, (_, slug, anchor) => {
-      return `${anchor}<b id="sidebar-${slug}-ref">*</b>`;
+        return `${anchor}<b id="sidebar-${slug}-ref">*</b>`;
     });
-  
+
     // Done!
     return html;
-  };
+};
 
   const REGEXP_SIDEBAR = /<a href="\/articles\/sidebar\/([^\/"]+)\/?">([^<]+)<\/a>/g;
   const REGEXP_EXTERNAL_LINK = /<a href="(http[^"]+)">([^<]+)<\/a>/g;
