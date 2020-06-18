@@ -6,6 +6,7 @@ import fetch from "node-fetch";
 export const MAP_TAGID_TO_NAME: Record<number,string> = {
     2: "Metrics",
     3: "Growth",
+    4: "Persona",
 }
 
 const FETCH_OPS = {
@@ -161,6 +162,11 @@ function transformForHeadless(html: string): string {
     // Transform images to use our proxy
     html = html.replace(/src="https?:\/\//g, `src="/api/proxy/`);
     html = html.replace(/(?=(width|height|style|srcset)\=")(.*?)(?=" )./g, "");
+
+    // Transform intentional leading whitespace
+    html = html.replace(/<br\s*\/?>( +)/g, (_, spaces) => {
+        return `<br/>${"&nbsp;".repeat(spaces.length)}`;
+    });
   
     // Done!
     return html;
