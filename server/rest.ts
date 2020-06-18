@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { env } from "process";
 
 /**
  * Mapping of tag IDs to text.  We could pull that from WordPress of course.
@@ -6,6 +7,12 @@ import fetch from "node-fetch";
 export const MAP_TAGID_TO_NAME: Record<number,string> = {
     2: "Metrics",
     3: "Growth",
+}
+
+const FETCH_OPS = {
+    headers: {
+        "Authorization": `Bearer ${process.env.WP_API_TOKEN}`,
+    }
 }
 
 /**
@@ -85,7 +92,7 @@ const WP_URL = process.env.WP_URL;
  */
 export async function getPostById( id:number ): Promise<WPPost> {
     const url = `${WP_URL}/wp-json/wp/v2/posts/${id}`;
-    const response = await fetch(url);
+    const response = await fetch(url, FETCH_OPS);
     if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
     const post = transformPost(await response.json());
     post.content.rendered = await transformFull(post.content.rendered);
@@ -97,7 +104,7 @@ export async function getPostById( id:number ): Promise<WPPost> {
  */
 export async function getPostBySlug( slug:string, postType:string = "posts" ): Promise<WPPost> {
     const url = `${WP_URL}/wp-json/wp/v2/${postType}?slug=${slug}`;
-    const response = await fetch(url);
+    const response = await fetch(url, FETCH_OPS);
     if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
     const posts: WPPost[] = await response.json();
     if ( posts.length === 0 ) throw new Error("couldn't find post with slug=" + slug)
@@ -111,7 +118,7 @@ export async function getPostBySlug( slug:string, postType:string = "posts" ): P
  */
 export async function getPostsByTagId( id:number ): Promise<WPPost[]> {
     const url = `${WP_URL}/wp-json/wp/v2/posts?tags=${id}`;
-    const response = await fetch(url);
+    const response = await fetch(url, FETCH_OPS);
     if ( ! response.ok ) throw new Error("error fetching from WordPress: " + response.statusText)
     const posts: WPPost[] = await response.json();
     return posts.map( post => transformPost(post) );
@@ -133,8 +140,19 @@ function transformPost( post:WPPost ): WPPost {
 function transformForHeadless(html: string): string {
     if (!html) return "";
     
-    // Transform links to stay with our Headless system
+    // Transform links that stay with our Headless system.
     html = html.replace(/\bhref="https?:\/\/\w+\.wpengine\.com\//g, `href="/articles/`);
+    
+    // Transform links to "references."
+    const refs = new Map<string,number>();      // mapping of URL to number, so we can reuse them
+    html = html.replace(REGEXP_REFERENCE_LINK, (_, href) => {
+        let n = refs.get(href);
+        if ( n === undefined ) {
+            n = refs.size + 1;
+            refs.set(href,n);
+        }
+        return ` <a target="_blank" class="ref" href="${href}">[${n}]</a>`;    // intentional initial space ensures there always is one
+    });
 
     // Replace external links with an indication that it will take you away from the site.
     html = html.replace(REGEXP_EXTERNAL_LINK, (_, href, target) => {
@@ -192,3 +210,4 @@ async function transformFull(html: string): Promise<string> {
 
   const REGEXP_SIDEBAR = /<a href="\/articles\/sidebar\/([^\/"]+)\/?">([^<]+)<\/a>/g;
   const REGEXP_EXTERNAL_LINK = /<a href="(http[^"]+)">([^<]+)<\/a>/g;
+  const REGEXP_REFERENCE_LINK = /\[?<a href="([^"]+)">\[?ref\]?<\/a>\]?/gi;

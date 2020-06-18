@@ -27,12 +27,14 @@ body,
 img {
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 
 figure {
   margin: 0;
   padding: 0;
   border: 2px inset adjust-color( $articleBackgroundColor, $lightness: 0% );
+  max-width: 100%;
 }
 
 figure.alignright {
@@ -100,9 +102,13 @@ figure.alignleft {
   a {
     color: white;
   }
-  video,
-  img {
-    max-width: 100%;
+  a.ref {
+    color: #808080;
+    text-decoration: none;
+  }
+  a.ref:hover {
+    color: #ffffff;
+    text-decoration: none;
   }
 }
 .cards {
