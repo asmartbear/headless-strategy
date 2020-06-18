@@ -160,13 +160,15 @@ function transformForHeadless(html: string): string {
     });
   
     // Transform images to use our proxy
-    html = html.replace(/src="https?:\/\//g, `src="/api/proxy/`);
-    html = html.replace(/(?=(width|height|style|srcset)\=")(.*?)(?=" )./g, "");
+    html = html.replace(/<img src="https?:\/\/([^"]+)[^>]*>/g, `<img src="/api/proxy/$1" />`);
 
     // Transform intentional leading whitespace
     html = html.replace(/<br\s*\/?>( +)/g, (_, spaces) => {
         return `<br/>${"&nbsp;".repeat(spaces.length)}`;
     });
+  
+    // Add attributes to HR tags
+    html = html.replace(/<hr[^>]*>/g, `<hr size="1" NOSHADE />`);
   
     // Done!
     return html;

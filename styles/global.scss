@@ -36,6 +36,7 @@ figure {
   border: 2px inset adjust-color( $articleBackgroundColor, $lightness: 0% );
   max-width: 100%;
   width: auto;
+  background: white;
 }
 
 figure.alignright {
@@ -48,6 +49,11 @@ figure.alignleft {
   float: left;
   width: 40%;
   margin-right: 1em;
+}
+
+hr {
+  width: 40%;
+  color: white;
 }
 
 /*******************************/
@@ -89,6 +95,9 @@ figure.alignleft {
     a:hover {
       text-decoration: underline;
     }
+  }
+  a:hover {
+    color: #a0a0ff;
   }
   .blogtitle {
     margin: 0;
@@ -165,5 +174,17 @@ figure.alignleft {
       width: 40%;
       margin-right: -2em;
     }
+    blockquote {
+      font-size: 80%;   /* not quite so small; it's hard to read on a phone. */
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  /* don't word-wrap when the screen is really narrow */
+  figure.alignright, figure.alignleft {
+    float: none;
+    width: 100%;
+    margin: 0;
   }
 }
