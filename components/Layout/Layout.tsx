@@ -5,10 +5,12 @@ import { Footer } from "../Footer/Footer";
 
 interface LayoutProps {
   className?: string;
+  extraFooterChildren?: JSX.Element[],
 }
 
 export const Layout: React.FunctionComponent<LayoutProps> = ({
   className,
+  extraFooterChildren,
   children,
 }) => (
   <div className={styles.layout}>
@@ -29,6 +31,6 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
         <img className={styles.backgroundImage} src="/images/vaporwave.png" />
       </div>
     </div>
-    <Footer />
+    <Footer extraFooterChildren={extraFooterChildren} />
   </div>
 );

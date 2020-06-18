@@ -2,7 +2,12 @@ import { Logo } from "../Logo/Logo";
 
 import styles from "./Footer.module.scss";
 
-export const Footer = () => (
+interface MyProps {
+  extraFooterChildren?: JSX.Element[],
+}
+
+export const Footer = (p:MyProps) => {
+  return (
   <nav className={styles.footer}>
     <div className={styles.linkContainer}>
       <Logo />
@@ -16,5 +21,9 @@ export const Footer = () => (
         Some icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a>.
       </span>
     </div>
+    <div className={styles.legalContainer}>
+      {p.extraFooterChildren ?? []}
+    </div>
   </nav>
-);
+  );
+}

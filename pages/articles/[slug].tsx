@@ -29,8 +29,12 @@ const Post = ({ post, full }: MyProps) => {
       </span><br/>{tagSpans}
     </div> : [];
 
+  const extraFooterChildren = [
+    <span>[<a href={`${process.env.WP_URL}/wp-admin/post.php?post=${post.id}&action=edit`} target="_blank">Edit in WP</a>]</span>
+  ];
+
   return (
-    <Layout className={styles.post}>
+    <Layout className={styles.post} extraFooterChildren={extraFooterChildren}>
       <header>
         <Link href="/">
           <h2 className={styles.sitetitle}>

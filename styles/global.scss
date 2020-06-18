@@ -35,6 +35,7 @@ figure {
   padding: 0;
   border: 2px inset adjust-color( $articleBackgroundColor, $lightness: 0% );
   max-width: 100%;
+  width: auto;
 }
 
 figure.alignright {

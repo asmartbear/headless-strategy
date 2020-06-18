@@ -16,7 +16,7 @@ const Home = (p:MyProps) => {
       <header>
         <h1>WP Engine Product Strategy</h1>
         <p className={styles.description}>
-          A Hyperlinked Wunderkammer
+          A Digital Wunderkammer
         </p>
       </header>
       <main className={styles.main}>

@@ -20,15 +20,15 @@ $textColor: #98a2a7;
     align-self: flex-end;
     display: flex;
     flex-direction: row;
-    .legal {
-      flex: 1;
+    span {
       color: $textColor;
       font-size: 12px;
+    }
+    .legal {
+      flex: 1;
       text-align: right;
     }
     .copyright {
-      color: $textColor;
-      font-size: 12px;
     }
   }
 }

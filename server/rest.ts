@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import { env } from "process";
 
 /**
  * Mapping of tag IDs to text.  We could pull that from WordPress of course.
