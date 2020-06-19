@@ -127,7 +127,7 @@ hr {
   }
   blockquote {
     text-align: right;
-    font-size: 70%;
+    font-size: 80%;
     font-style: italic;
     p {
       margin: 0;
@@ -173,9 +173,6 @@ hr {
     .sidebar {
       width: 40%;
       margin-right: -2em;
-    }
-    blockquote {
-      font-size: 80%;   /* not quite so small; it's hard to read on a phone. */
     }
   }
 }

@@ -39,6 +39,9 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
         {/* <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> */}
         {/* <script src="/util.js"></script> */}
       </Head>
+        {/* <div className={styles.callformore}>
+          Wish the Wunderkammer went deeper on a topic? <a href="mailto:jason.cohen@wpengine.com">Tell me!</a>
+        </div> */}
       <Navbar />
       <div className={`${styles.main} ${className}`}>
         {notAuthedContent ?? children}
