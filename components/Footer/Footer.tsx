@@ -17,7 +17,7 @@ export const Footer = (p:MyProps) => {
         © 2010–2020 WP Engine, Inc. All Rights Reserved.
       </span>
       <span className={`${styles.legal} fe`}>
-        WP ENGINE®, TORQUE®, EVERCACHE®, and the cog logo service marks are owned by WP Engine, Inc.<br />
+        WP ENGINE®, TORQUE®, EVERCACHE®, and the cog logo service marks are owned by WP Engine Inc.<br />
         Some icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a>.
       </span>
     </div>
