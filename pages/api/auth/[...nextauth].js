@@ -4,14 +4,28 @@ import Providers from 'next-auth/providers'
 const options = {
   site: process.env.SITE || 'http://localhost:3000',
 
-  // Configure one or more authentication providers
-  providers: [
+  // Will supply this below, depending on what's configured
+  providers: [],
 
+  // A database is optional, but required to persist accounts in a database
+//   database: process.env.DATABASE_URL,
+}
+
+console.log("auth: manual secret:", process.env.MANUAL_AUTH_SECRET)
+
+// Configure Google Auth
+if ( process.env.GOOGLE_CLIENT_ID ) {
+  options.providers.push(
     Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
-    }),
+    })
+  );
+}
 
+// Configure Local Auth
+if ( process.env.MANUAL_AUTH_SECRET ) {
+  options.providers.push(
     Providers.Credentials({
       authorize: async (credentials) => {
         const user = getUserFromCredentials(credentials) // You need to add this!
@@ -22,10 +36,7 @@ const options = {
         }
       }
     })
-  ],
-
-  // A database is optional, but required to persist accounts in a database
-//   database: process.env.DATABASE_URL,
+  );
 }
 
 function getUserFromCredentials(creds) {

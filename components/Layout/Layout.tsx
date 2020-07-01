@@ -2,7 +2,8 @@ import { Navbar } from "../Navbar/Navbar";
 import Head from "next/head";
 import styles from "./Layout.module.scss";
 import { Footer } from "../Footer/Footer";
-import { useSession } from 'next-auth/client'
+import { useSession, signin } from 'next-auth/client'
+import { cssNumber } from "jquery";
 
 interface LayoutProps {
   className?: string;
@@ -17,16 +18,23 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
 
   // Auth
   const [ session, loading ] = useSession()
-  // const notAuthedContent = !session ? <div className={styles.auth}>
-  //   Not signed in. <a href="/api/auth/signin">Sign in</a>.
-  // </div> : null;
-  const notAuthedContent = !session ? <div className={styles.auth}>
-    Not signed in.
-    <form method='post' action='/api/auth/callback/credentials'>
-      <input name='secret' type='password' defaultValue='' />
-      <button type='submit'>Sign in</button>
-    </form>
-  </div> : null;
+  let notAuthedContent: JSX.Element|null = null;
+  if ( !session ) {
+    if ( process.env.MANUAL_AUTH ) {
+      notAuthedContent = <div className={styles.auth}>
+        Not signed in. <br/>
+        <form method='post' action='/api/auth/callback/credentials'>
+          <input name='secret' type='password' defaultValue='' />
+          <button type='submit'>Sign in</button>
+        </form>
+      </div>;
+    } else {
+      notAuthedContent = <div className={styles.auth}>
+        Not signed in. <br/>
+        <button onClick={signin}>Sign In</button>
+      </div>;
+    }
+  }
 
   return (
     <div className={styles.layout}>
