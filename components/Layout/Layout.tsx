@@ -3,7 +3,6 @@ import Head from "next/head";
 import styles from "./Layout.module.scss";
 import { Footer } from "../Footer/Footer";
 import { useSession, signin } from 'next-auth/client'
-import { cssNumber } from "jquery";
 
 interface LayoutProps {
   className?: string;
