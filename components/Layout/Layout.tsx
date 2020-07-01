@@ -19,6 +19,7 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
   // Auth
   const [ session, loading ] = useSession()
   let notAuthedContent: JSX.Element|null = null;
+  console.log("env:", JSON.stringify(process.env))
   if ( !session ) {
     if ( process.env.MANUAL_AUTH ) {
       notAuthedContent = <div className={styles.auth}>
