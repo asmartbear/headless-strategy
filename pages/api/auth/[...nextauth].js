@@ -11,8 +11,6 @@ const options = {
 //   database: process.env.DATABASE_URL,
 }
 
-console.log("auth: basic secret:", process.env.BASIC_AUTH_SECRET)
-
 // Configure Google Auth
 if ( process.env.GOOGLE_CLIENT_ID ) {
   options.providers.push(
