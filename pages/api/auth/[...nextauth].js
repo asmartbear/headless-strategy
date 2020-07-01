@@ -11,7 +11,7 @@ const options = {
 //   database: process.env.DATABASE_URL,
 }
 
-console.log("auth: manual secret:", process.env.MANUAL_AUTH_SECRET)
+console.log("auth: basic secret:", process.env.BASIC_AUTH_SECRET)
 
 // Configure Google Auth
 if ( process.env.GOOGLE_CLIENT_ID ) {
@@ -24,7 +24,7 @@ if ( process.env.GOOGLE_CLIENT_ID ) {
 }
 
 // Configure Local Auth
-if ( process.env.MANUAL_AUTH_SECRET ) {
+if ( process.env.BASIC_AUTH_SECRET ) {
   options.providers.push(
     Providers.Credentials({
       authorize: async (credentials) => {
@@ -40,7 +40,7 @@ if ( process.env.MANUAL_AUTH_SECRET ) {
 }
 
 function getUserFromCredentials(creds) {
-  if (creds.secret === process.env.MANUAL_AUTH_SECRET) {
+  if (creds.secret === process.env.BASIC_AUTH_SECRET) {
     return true;
   }
   return false;

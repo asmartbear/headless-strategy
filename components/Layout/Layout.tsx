@@ -20,9 +20,9 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
   const [ session, loading ] = useSession()
   let notAuthedContent: JSX.Element|null = null;
   console.log("env:", JSON.stringify(process.env));
-  console.log("manual auth?", process.env.MANUAL_AUTH);
+  console.log("basic auth?", process.env.BASIC_AUTH);
   if ( !session ) {
-    if ( process.env.MANUAL_AUTH ) {
+    if ( process.env.BASIC_AUTH ) {
       notAuthedContent = <div className={styles.auth}>
         Not signed in. <br/>
         <form method='post' action='/api/auth/callback/credentials'>
