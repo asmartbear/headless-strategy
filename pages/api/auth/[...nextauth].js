@@ -11,7 +11,7 @@ const options = {
 //   database: process.env.DATABASE_URL,
 }
 
-console.log("auth-api: env=",process.env,", google client ID=",process.env.GOOGLE_CLIENT_ID)
+console.log("auth-api: site=",options.site," env=",process.env,", google client ID=",process.env.GOOGLE_CLIENT_ID)
 
 // Configure Google Auth
 if ( process.env.GOOGLE_CLIENT_ID ) {
