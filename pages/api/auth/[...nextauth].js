@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 
 const options = {
-  site: process.env.SITE || 'http://localhost:3000',
+  site: process.env.NODE_ENV === "development" ? "localhost:3000" : 'https://haam5tsboze1rcg78nh62.headless-customer.app.fugax.io/',
 
   // Will supply this below, depending on what's configured
   providers: [],
@@ -11,7 +11,7 @@ const options = {
 //   database: process.env.DATABASE_URL,
 }
 
-console.log("auth-api: site=",options.site," env=",process.env,", google client ID=",process.env.GOOGLE_CLIENT_ID)
+// console.log("auth-api: site=",options.site," env=",process.env,", google client ID=",process.env.GOOGLE_CLIENT_ID)
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "foo";
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "bar";
