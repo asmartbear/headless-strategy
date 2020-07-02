@@ -1,6 +1,6 @@
 {
   "name": "headless-strategy",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "Choose your own adventure! But all roads lead to the same place.",
   "main": "index.js",
   "scripts": {

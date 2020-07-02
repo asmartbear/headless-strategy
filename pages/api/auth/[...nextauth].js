@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 
 const options = {
-  site: process.env.NODE_ENV === "development" ? "localhost:3000" : 'https://haam5tsboze1rcg78nh62.headless-customer.app.fugax.io/',
+  site: process.env.NODE_ENV === "development" ? "localhost:3000" : 'https://haam5tsboze1rcg78nh62.headless-customer.app.fugax.io',
 
   // Will supply this below, depending on what's configured
   providers: [],
