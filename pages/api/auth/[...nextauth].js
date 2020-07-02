@@ -13,12 +13,15 @@ const options = {
 
 console.log("auth-api: site=",options.site," env=",process.env,", google client ID=",process.env.GOOGLE_CLIENT_ID)
 
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "foo";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "bar";
+
 // Configure Google Auth
-if ( process.env.GOOGLE_CLIENT_ID ) {
+if ( GOOGLE_CLIENT_ID ) {
   options.providers.push(
     Providers.Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET
     })
   );
 }
