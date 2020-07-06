@@ -1,6 +1,7 @@
 import { Navbar } from "../Navbar/Navbar";
 import Head from "next/head";
 import styles from "./Layout.module.scss";
+import { useRouter } from 'next/router'
 import { Footer } from "../Footer/Footer";
 import { useSession, signin } from 'next-auth/client'
 
@@ -33,6 +34,19 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
         <button onClick={signin}>Sign In</button>
       </div>;
     }
+  }
+
+  // Convert regular links to articles
+  if ( typeof window !== "undefined" && window.addEventListener && !(window as any).hasAddedOurInternalListener ) {
+    const router = useRouter();
+    window.addEventListener('click', (e) => {
+      const obj = e.target as any;    // quiet Typescript
+      if (obj.classList.contains('nextjs-link')) { // this line check a tag contains class
+        e.preventDefault();
+        router.push('/articles/[slug]', obj.pathname);
+      }
+    });
+    (window as any).hasAddedOurInternalListener = true;
   }
 
   return (

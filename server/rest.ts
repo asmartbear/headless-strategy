@@ -141,7 +141,13 @@ function transformForHeadless(html: string): string {
     if (!html) return "";
     
     // Transform links that stay with our Headless system.
-    html = html.replace(/\bhref="https?:\/\/\w+\.wpengine\.com\//g, `href="/articles/`);
+    html = html.replace(/\bhref="https?:\/\/\w+\.wpengine\.com\/([^"]*)"/g, (_, path:string) => {
+        let result = `href="/articles/${path}"`;     // at minimum, replace the full domain with our local path
+        if ( path.match("^[^/]+/?$") ) {       // only direct posts are transformed, not sidebars or other custom post types
+            result += ` class="nextjs-link"`;
+        }
+        return result;
+    });
     
     // Transform links to "references."
     const refs = new Map<string,number>();      // mapping of URL to number, so we can reuse them

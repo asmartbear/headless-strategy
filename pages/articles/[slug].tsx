@@ -16,7 +16,7 @@ interface MyProps {
 
 const Post = ({ post, full }: MyProps) => {
 
-  const tagSpans = full ? post.tags.map( tagId => <span className="metadataValue">&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a>&nbsp;&nbsp;</span> ) : [];
+  const tagSpans = full ? post.tags.map( tagId => <span key={tagId} className="metadataValue">&#x1F3F7;<a href={`/tags/${tagId}`}>{(MAP_TAGID_TO_NAME[tagId] ?? String(tagId)).toLocaleUpperCase()}</a>&nbsp;&nbsp;</span> ) : [];
   const tagLastUpdated = full ? <div>
       <span className="metadata">LAST UPDATED: </span>
       <span className="metadataValue">
@@ -30,7 +30,7 @@ const Post = ({ post, full }: MyProps) => {
     </div> : [];
 
   const extraFooterChildren = [
-    <span>[<a href={`${process.env.WP_URL}/wp-admin/post.php?post=${post.id}&action=edit`} target="_blank">Edit in WP</a>]</span>
+    <span key="edit-post">[<a href={`${process.env.WP_URL}/wp-admin/post.php?post=${post.id}&action=edit`} target="_blank">Edit in WP</a>]</span>
   ];
 
   return (
