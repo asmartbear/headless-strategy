@@ -43,6 +43,11 @@ export const Layout: React.FunctionComponent<LayoutProps> = ({
       const obj = e.target as any;    // quiet Typescript
       if (obj.classList.contains('nextjs-link')) { // this line check a tag contains class
         e.preventDefault();
+        const callBackOnce = () => {
+          window.scrollTo(0,0);
+          router.events.off('routeChangeComplete', callBackOnce )
+        }
+        router.events.on('routeChangeComplete', callBackOnce );
         router.push('/articles/[slug]', obj.pathname);
       }
     });

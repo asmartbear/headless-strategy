@@ -148,6 +148,7 @@ hr {
   flex: 1;
   flex-wrap: wrap;
 }
+
 .sidebar {
   display: block;
   float: right;
@@ -160,6 +161,10 @@ hr {
   margin: 0 -4em 1ex 1.5em;
   font-size: 75%;
   border: 1px inset adjust-color( $articleBackgroundColor, $lightness: 60% );
+}
+
+.sidebar ul {
+  padding-left: 2.5ex;
 }
 
 @media screen and (max-width: 900px) {
