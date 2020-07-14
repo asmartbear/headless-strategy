@@ -133,6 +133,9 @@ hr {
       margin: 0;
       padding: 0;
     }
+    em {
+      font-style: normal;   /* ironically, because the other quote is italic. */
+    }
   }
   cite {
     color: #b0b0b0;
