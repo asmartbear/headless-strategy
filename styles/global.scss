@@ -129,6 +129,7 @@ hr {
     text-align: right;
     font-size: 80%;
     font-style: italic;
+    padding-left: 40%;
     p {
       margin: 0;
       padding: 0;
@@ -182,6 +183,9 @@ hr {
       width: 40%;
       margin-right: -2em;
     }
+    blockquote {
+      padding-left: 0;
+    }
   }
 }
 
@@ -192,4 +196,45 @@ hr {
     width: 100%;
     margin: 0;
   }
+}
+
+@media print {
+
+  /* more ideas, like putting link text in the text: https://www.jotform.com/blog/css-perfect-print-stylesheet-98272/ */
+
+  .main {
+    max-width: 100%;
+    padding: 0.5em 0.5em;
+  }
+
+  .article, .figure {
+    background: none;
+    font: 12pt Georgia, "Times new Roman", Times, serif;
+    line-height: 1.5;
+
+    a {
+      color: black;
+    }
+    li, h1, h2, h3, h4, h5, h6, img, pre, blockquote {
+      page-break-inside: avoid;
+    }
+    ul, ol, dl {
+      page-break-before: avoid;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      page-break-after: avoid;
+    }
+  }
+
+  .sidebar {
+    background: none;
+    margin-right: 1em;
+    border: 1px solid #a0a0a0;
+    line-height: 1.4;
+  }
+
+  .external-link {
+    display: none;
+  }
+
 }

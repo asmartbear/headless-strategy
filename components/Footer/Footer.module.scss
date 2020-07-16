@@ -31,4 +31,35 @@ $textColor: #98a2a7;
     .copyright {
     }
   }
+
+  em {
+    font-style: normal;
+    font-weight: bold;
+    color: red;
+  }
+}
+
+.printFooter {
+  display: none;
+}
+
+
+@media print {
+
+  .footer {
+    display: none;
+  }
+
+  .printFooter {
+    display: block;
+    font: 12pt Georgia, "Times new Roman", Times, serif;
+    text-align: center;
+
+    em {
+      font-style: normal;
+      font-weight: bold;
+      color: red;
+    }
+  }
+
 }

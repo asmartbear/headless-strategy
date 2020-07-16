@@ -1,5 +1,4 @@
 $maxwidth: 877;
-$articleBackgroundColor: #180038f0;
 
 .post {
   color: white;
@@ -22,4 +21,12 @@ $articleBackgroundColor: #180038f0;
       font-size: 1em;
     }
   }
+}
+
+@media print {
+
+  .post {
+    color: black;
+  }
+
 }

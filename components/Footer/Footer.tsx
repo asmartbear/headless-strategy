@@ -7,14 +7,14 @@ interface MyProps {
 }
 
 export const Footer = (p:MyProps) => {
-  return (
+  return (<div>
   <nav className={styles.footer}>
     <div className={styles.linkContainer}>
       <Logo />
     </div>
     <div className={styles.legalContainer}>
       <span className={`${styles.copyright}`}>
-        © 2010–2020 WP Engine, Inc. All Rights Reserved.
+      <em>CONFIDENTIAL - DO NOT DISTRIBUTE</em><br/>© 2010–2020 WP Engine, Inc. All Rights Reserved.
       </span>
       <span className={`${styles.legal} fe`}>
         WP ENGINE®, TORQUE®, EVERCACHE®, and the cog logo service marks are owned by WP Engine, Inc.<br />
@@ -26,5 +26,9 @@ export const Footer = (p:MyProps) => {
       {p.extraFooterChildren ?? []}
     </div>
   </nav>
+  <nav className={styles.printFooter}>
+      <em>CONFIDENTIAL - DO NOT DISTRIBUTE</em><br/>© 2010–2020 WP Engine, Inc. All Rights Reserved.
+    </nav>
+  </div>
   );
 }
